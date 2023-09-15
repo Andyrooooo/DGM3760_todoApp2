@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>Basic Todo App</title>
+ </head>
+ <body>
+  <header>
+   <h1 class="todoAppTitle">Andrew's Todo App</h1>
+  </header>
+
+  <main>
+    <!-- form to add todos -->
+    <div class="newFormSection">
+        <form id="newTodoForm">
+            <div class="formDescriptionSection">
+                <label class="todoNameDescription">Description</label>
+                <input class="todoInputName" type="text" />
+            </div>
+         
+            <div class="addBTNContainer">
+                <input type="submit" class="addBTN" value="Add Todo"></input>
+            </div>
+        </form>
+    </div>
+
+    <!-- displays the todos -->
+    <button class="removeAllTodos">Remove All</button>
+    <p class="todoMessages"></p>
+    <ul class="displayTodos"></ul>
+
+  </main>
+
+ </body>
+ <script src="main.js"></script>
+</html>

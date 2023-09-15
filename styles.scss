@@ -1,0 +1,138 @@
+body {
+ background: black;
+
+ .todoAppTitle {
+  color: white;
+  text-align: center;
+  text-shadow: 1px 1px 8px rgb(165, 243, 255);
+ }
+
+ .todoNameDescription,
+ .displayTodosTitle {
+  color: white;
+  text-shadow: 1px 1px 8px rgb(165, 243, 255);
+ }
+
+ .newFormSection {
+  border-bottom: 1px solid rgb(62, 62, 62);
+  padding-bottom: 1rem;
+
+  #newTodoForm {
+   display: flex;
+   flex-wrap: wrap;
+
+   .formDescriptionSection,
+   .addBTNContainer {
+    flex-basis: 100%;
+   }
+  }
+ }
+
+ .todoNameDescription {
+  display: block;
+  width: 100%;
+  /*   padding-left: 20px; */
+ }
+
+ .todoInputName {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  margin: 5px 0 1rem 0;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+ }
+ .todoInputName:hover {
+  box-shadow: 1px 1px 8px rgb(165, 243, 255);
+ }
+
+ .addBTN {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+ }
+
+ .addBTN:hover {
+  background: rgb(165, 243, 255);
+  box-shadow: 1px 1px 8px rgb(136, 200, 210);
+ }
+
+ .removeAllTodos {
+  width: 150px;
+  padding: 1rem 0;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1rem 0 0 0;
+  background: rgb(152, 0, 0);
+  color: white;
+ }
+ .removeAllTodos:hover {
+  background: lighten($color: rgb(152, 0, 0), $amount: 20%);
+  box-shadow: 1px 1px 30px lighten($color: rgb(152, 0, 0), $amount: 40%);
+ }
+
+ .todoMessages {
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 1px 1px 8px rgb(165, 243, 255);
+  margin-top: 3rem;
+ }
+
+ .displayTodos {
+  padding-left: 0;
+  list-style-type: none;
+  margin-bottom: 1rem;
+
+  .todoListItem {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 1rem;
+
+   .todoInputDisplayName {
+    flex-basis: 61%;
+    box-sizing: border-box;
+    padding: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background: rgb(197, 197, 197);
+   }
+   .todoNameBTNsContainer {
+    flex-basis: 36%;
+    display: flex;
+    justify-content: space-between;
+   }
+   .todoEditNameBTN,
+   .todoDeleteBTN {
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-basis: 47.5%;
+   }
+
+   .todoEditNameBTN {
+    background: rgb(165, 243, 255);
+   }
+   .todoEditNameBTN:hover {
+    background: darken($color: rgb(165, 243, 255), $amount: 20%);
+    box-shadow: 1px 1px 8px darken($color: rgb(165, 243, 255), $amount: 20%);
+   }
+
+   .todoDeleteBTN {
+    background: red;
+    color: white;
+   }
+   .todoDeleteBTN:hover {
+    background: lighten($color: red, $amount: 10%);
+    box-shadow: 1px 1px 8px lighten($color: red, $amount: 10%);
+   }
+  }
+ }
+}
