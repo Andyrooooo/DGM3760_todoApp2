@@ -59,7 +59,7 @@ newTodoForm.addEventListener("submit", (e) => {
    alert("Please select a category")
   } else {
    /* gives us a new ID and if there is no id's then it will assign 1 to it */
-   newTodoID = todos.length === 0 ? 1 : todos[todos.length - 1].todoID + 1
+   newTodoID = todos.length === 0 ? 1 : todos.at(-1).todoID + 1
 
    let todoListItem = document.createElement("li")
    todoListItem.classList.add("todoListItem")
