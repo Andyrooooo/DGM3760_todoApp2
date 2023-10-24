@@ -1,4 +1,23 @@
-let todos = []
+/* let todos = [] */
+/*  async function getTodos() {
+   const response = await fetch("http://localhost:8005/")
+   let todos = await response.json()
+   return todos
+}
+getTodos() */
+let getTodos = async () => {
+   const response = await fetch("http://localhost:8005/")
+   let apiTodoList = await response.json()
+   return apiTodoList
+}
+getTodos().then(() => {
+   todos = apiTodoList
+   console.log(todos)
+   message()
+   updateCategoryList()
+})
+
+
 
 let displayTodos = document.querySelector(".displayTodos")
 let newTodoForm = document.querySelector("#newTodoForm")
@@ -17,7 +36,7 @@ let deleteEditAddCategories = document.querySelector(".deleteEditAddCategories")
 deleteEditAddCategories.style.display = "none"
 
 
-/* Todo messages */
+// Todo messages
 const message = () => {
  todoMessages.innerText =
   todos.length === 0
@@ -26,7 +45,7 @@ const message = () => {
    ? `You have ${todos.length} todo`
    : `You have ${todos.length} todos left`
 }
-message()
+
 
 
 // Updates the categoryList----------------------------------------------------------------
@@ -39,26 +58,26 @@ function updateCategoryList() {
      let newOption = document.createElement("option")
      newOption.textContent = option.textContent
      deleteCategorySelect.appendChild(newOption)
-     /* editCategorySelect.appendChild(newOption) */
+   //   editCategorySelect.appendChild(newOption)
      editCategorySelect.appendChild(newOption.cloneNode(true))
     }
    })
   }
-  updateCategoryList()
 
 
-/* EVENT LISTENER TO TAKE VALUES AND CREATE A NEW TODO IN THE LIST ------------ */
+
+// EVENT LISTENER TO TAKE VALUES AND CREATE A NEW TODO IN THE LIST ------------
 newTodoForm.addEventListener("submit", (e) => {
  e.preventDefault()
 
  let createNewTodo = () => {
-  /* Makes sure the user does not put in an empty field */
+//   Makes sure the user does not put in an empty field
   if (todoInputName.value === "") {
    alert("Please enter a name")
   } else if (todoSelectCategory.value === "") {
    alert("Please select a category")
   } else {
-   /* gives us a new ID and if there is no id's then it will assign 1 to it */
+   // gives us a new ID and if there is no id's then it will assign 1 to it
    newTodoID = todos.length === 0 ? 1 : todos.at(-1).todoID + 1
 
    let todoListItem = document.createElement("li")
@@ -91,22 +110,22 @@ newTodoForm.addEventListener("submit", (e) => {
    todoListItem.appendChild(todoNameBTNsContainer)
    displayTodos.appendChild(todoListItem)
 
-   /* create new object for todos array */
+   // create new object for todos array
    let todo = {
     todoName: todoInputName.value,
     todoCategory: todoSelectCategory.value,
     todoID: newTodoID,
    }
 
-   /* add new todo to array */
+   // add new todo to array
    todos = [...todos, todo]
 
-   /* clear out name input */
+   // clear out name input
    todoInputName.value = ""
    todoSelectCategory.value = ""
 
 
-   /* DELETES A TODO ------------------------------------------------------------------*/
+   // DELETES A TODO ------------------------------------------------------------------
    todoDeleteBTN.addEventListener("click", () => {
     let todoDeleteIndex = Array.from(displayTodos.children).indexOf(
      todoListItem
@@ -120,7 +139,7 @@ newTodoForm.addEventListener("submit", (e) => {
     message()
    })
 
-   /* Edits a todo --------------------------------------------------------------------*/
+   // Edits a todo --------------------------------------------------------------------
    todoEditNameBTN.addEventListener("click", () => {
     if (todoEditNameBTN.innerText == "Edit Name") {
      todoInputDisplayName.removeAttribute("readonly")
@@ -137,7 +156,7 @@ newTodoForm.addEventListener("submit", (e) => {
    })
   }
  }
- /* Calls the event listener */
+ //  Calls the event listener
  createNewTodo()
 
  message()
@@ -216,14 +235,14 @@ editCategoryBTN.addEventListener("click", () => {
       let oldName = editCategorySelect.options[selectedOptionIndex].innerText
       // stores the new innertext from the input
       let newName = editCategoryInputName.value
-      /* editCategorySelect.options[selectedOptionIndex].innerText = editCategoryInputName.value */
+      // editCategorySelect.options[selectedOptionIndex].innerText = editCategoryInputName.value
 
       // loops through the todos and checks if the category matches the old name 
       // if it does it assigns it the new value
       todos.forEach((todo) => {
          if (todo.todoCategory === oldName) {
             todo.todoCategory = newName
-            /* todo.todoCategory.value = newName */
+            // todo.todoCategory.value = newName
          }
       })
 
