@@ -1,23 +1,4 @@
-/* let todos = [] */
-/*  async function getTodos() {
-   const response = await fetch("http://localhost:8005/")
-   let todos = await response.json()
-   return todos
-}
-getTodos() */
-let getTodos = async () => {
-   const response = await fetch("http://localhost:8005/")
-   let apiTodoList = await response.json()
-   return apiTodoList
-}
-getTodos().then(() => {
-   todos = apiTodoList
-   console.log(todos)
-   message()
-   updateCategoryList()
-})
-
-
+let todos = []
 
 let displayTodos = document.querySelector(".displayTodos")
 let newTodoForm = document.querySelector("#newTodoForm")
@@ -45,7 +26,7 @@ const message = () => {
    ? `You have ${todos.length} todo`
    : `You have ${todos.length} todos left`
 }
-
+message()
 
 
 // Updates the categoryList----------------------------------------------------------------
@@ -63,7 +44,7 @@ function updateCategoryList() {
     }
    })
   }
-
+updateCategoryList()
 
 
 // EVENT LISTENER TO TAKE VALUES AND CREATE A NEW TODO IN THE LIST ------------

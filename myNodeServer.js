@@ -1,42 +1,64 @@
 const express = require('express')
-/* const cors = require('cors') */
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 8005
-/* const fs = require('fs') */
+const port = 5501
+// const fs = require('fs')
 
-/* app.use(cors()) */
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-/* app.get('/', (req, res) => {
-  fs.readFile('db.json', (err, data) => {
-    if (err) {
-      res.send('An error occurred')
-      return res.status(500)
-    }
-    const dataObj = JSON.parse(data)
-    res.json(dataObj)
-  })
-}) */
+// app.get('/', (req, res) => {
+//   fs.readFile('db.json', (err, data) => {
+//     if (err) {
+//       res.send('An error occurred')
+//       return res.status(500)
+//     }
+//     const dataObj = JSON.parse(data)
+//     res.json(dataObj) 
+//   }) 
+// })
+
+
+let categories = [
+  {
+    categoryName: "Work",
+    categoryID: 0
+  },
+  {
+    categoryName: "School",
+    categoryID: 1
+  },
+  {
+    categoryName: "Fitness",
+    categoryID: 2
+  },
+]
 
 let todos = [
   {
     todoName: "Take out the trash",
-    todoCategory: "Chores",
+    todoCategory: 0,
     todoID: 1
   },
   {
-    todoName: "Go for a walk",
-    todoCategory: "Exercise",
+    todoName: "Finish the todo app",
+    todoCategory: 1,
     todoID: 2
   },
   {
-    todoName: "Finish the todo app",
-    todoCategory: "Work",
+    todoName: "Start my other project",
+    todoCategory: 1,
     todoID: 3
-  }
+  },
+  {
+    todoName: "Go for a walk",
+    todoCategory: 2,
+    todoID: 4
+  },
 ]
+
 
 
 // grabs all todos in the array
@@ -52,11 +74,13 @@ app.get('/todos', (req, res) => {
 
     let newTodoID = todos.length === 0 ? 1 : todos.at(-1).todoID + 1
 
-    todos.push({
+    let newTodo = {
       todoName: req.body.todoName,
       todoCategory: req.body.todoCategory,
       todoID: newTodoID
-    })
+    }
+ 
+    todos = [...todos, newTodo]
 
     res.send(todos)
   })
@@ -88,59 +112,84 @@ app.get('/todos', (req, res) => {
 
 
   // gets all todos for a category
-  app.get('/todos/:categories', (req, res) => {
+  app.get('/todos/categories/:categoryID', (req, res) => {
 
-    let requestedTodoCategory = req.params.categories
+    let requestedTodoCategory = req.params.categoryID
 
     let filteredTodos = todos.filter(todo => todo.todoCategory == requestedTodoCategory)
 
     res.send(filteredTodos)
     console.log(requestedTodoCategory)
-/*     res.send("I am a get request for the categories") */
+    // res.send("I am a get request for the categories")
   })
 
 
   // gets just the categories
   app.get('/categories', (req, res) => {
-    let categories = todos.map(todo => todo.todoCategory)
+    /* let categoryList = categories.map(category => category.categoryName)
 
-    let uniqueCategoryNames = new Set(categories)
-    let uniqueCategories = [...uniqueCategoryNames]
+    let uniqueCategoryNames = new Set(categoryList)
+    let uniqueCategories = [...uniqueCategoryNames] */
 
-    res.send(uniqueCategories)
+    res.send(categories)
+  })
+
+   // adds a new todo object to the array
+   app.post('/categories', (req, res) => {
+
+    let newCategoryID = categories.length === 0 ? 1 : categories.at(-1).categoryID + 1
+
+    let newCategory = {
+      todoName: req.body.categoryName,
+      todoID: newCategoryID
+    }
+ 
+    categories = [...categories, newCategory]
+
+    res.send(categories)
   })
 
 
   // updates a todo objects category in the array
-  app.put('/categories/:category', (req, res) => {
-    let requestedTodoCategory = req.params.category
-    let newCategoryName = req.body.todoCategory
+  app.put('/categories/:categoryID', (req, res) => {
+    
+    let requestedTodoCategory = req.params.categoryID
+    let newCategoryName = req.body.categoryName
+
+    let categoryToUpdate = categories.find(category => category.categoryID == requestedTodoCategory)
+    categoryToUpdate.categoryName = newCategoryName
 
     // let categories = todos.map(todo => todo.todoCategory)
     // let filteredCategories = categories.filter(category => category.todoCategory == newCategoryName)
+
+    // keeping this just incase the object keeps old data inside of it
     todos.forEach(todo => {
       if (todo.todoCategory == requestedTodoCategory) {
-        todo.todoCategory = newCategoryName
+        todo.todoCategory = requestedTodoCategory
         } 
     })
-    console.log("all categories I requested: ", todos)
-    res.send(todos)
+    // console.log("all categories I requested: ", todos)
+    
+    console.log(categories, todos)
+    res.send(categories)
 })  
 
 
 // deletes a todo category from the object
-app.delete('/categories/:category', (req, res) => {
+app.delete('/categories/:categoryID', (req, res) => {
 
-  let requestedTodoCategory = req.params.category
+  let requestedTodoCategory = req.params.categoryID
 
-  todos = todos.map(todo => {
-    if (todo.todoCategory == requestedTodoCategory) {
-      todo.todoCategory = "empty"
-    }
-    return todo
-  })
+  categories = categories.filter(category => category.categoryID != requestedTodoCategory)
 
-  res.send(todos)
+  res.send(categories)
+
+  // categories = categories.map(category => {
+  //   if (category.categoryID == requestedTodoCategory) {
+  //     todo.todoCategory = "empty"
+  //   }
+  //   return todo
+  // })
 })
 
 
